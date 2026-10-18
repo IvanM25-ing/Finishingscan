@@ -1,0 +1,92 @@
+COATINGSCAN – PROTOTIPO PARA IPHONE, CREADO DESDE WINDOWS
+========================================================
+
+QUE HACE
+- Abre una foto de la galeria o desde la camara del iPhone.
+- Busca el numero que escribas utilizando reconocimiento de texto OCR.
+- Dibuja circulos rojos alrededor de las coincidencias.
+- Permite guardar o compartir la imagen marcada.
+- Trabaja sin conexion despues de guardar TODOS los archivos necesarios.
+- La foto se procesa localmente dentro del navegador; no se sube a un servidor.
+
+IMPORTANTE
+Esta version es una app web instalable (PWA) que funciona en iOS. No es una
+app .ipa nativa ni se instala a traves de la App Store. La version Swift
+del otro ZIP requiere Xcode y una Mac. ESTA version se prepara con Windows.
+
+PASO 1: PREPARAR OCR EN WINDOWS (REQUIERE INTERNET)
+1. Extrae el archivo ZIP completo a una carpeta de Windows.
+2. Ejecuta el archivo preparar_ocr.bat con doble clic.
+3. Espera a que aparezca "Listo". Descargara siete componentes de Tesseract.js.
+   Si falla algun archivo, vuelve a ejecutar el .bat.
+4. Comprueba que en vendor/ estan tesseract.min.js, worker.min.js,
+   los 4 tesseract-core-*.wasm.js de vendor/core y eng.traineddata.gz
+   en vendor/lang.
+
+PASO 2: PUBLICAR LA APP EN INTERNET (HTTPS)
+La PWA necesita una direccion https:// para instalarse en iPhone y para
+que el navegador pueda usar el service worker que guarda la app offline.
+
+Opcion sencilla: GitHub Pages (requiere una cuenta GitHub)
+1. Entra a github.com desde Windows y crea un repositorio PUBLICO nuevo,
+   por ejemplo "coatingscan". No agregues README automatico.
+2. Dentro del repositorio, selecciona "Add file" > "Upload files".
+3. Sube TODOS los archivos y carpetas extraidos, incluyendo la carpeta
+   vendor ya preparada y su eng.traineddata.gz. Arrastra el contenido de
+   CoatingScan_Windows_iPhone, NO la carpeta contenedora.
+4. Si GitHub limita una carga por archivo, sube los archivos por partes;
+   deben conservarse los directorios indicados en el ZIP.
+5. Abre "Settings" > "Pages" > "Build and deployment".
+   Selecciona "Deploy from a branch", "main" y "/ (root)"; guarda.
+6. Cuando aparezca la direccion de Pages, abre en iPhone Safari:
+   https://TU-USUARIO.github.io/coatingscan/
+
+ATENCION: Si tus fotos reales contienen informacion confidencial de la
+empresa, evita subirlas a GitHub o usarlas como imagen demo publica. Solo
+sube la aplicacion, su codigo y la imagen ficticia incluida. Revisa con
+la empresa la politica de fotos y uso de herramientas digitales.
+
+PASO 3: INSTALAR EN IPHONE
+1. Abre el enlace HTTPS con Safari en el iPhone (con internet inicialmente).
+2. Pulsa el boton Compartir y elige "Agregar a inicio" / "Añadir a pantalla
+   de inicio". El nombre sugerido es CoatingScan.
+3. Abre CoatingScan desde el icono nuevo.
+4. Pulsa "Preparar modo sin conexion" y espera el mensaje de confirmacion.
+   Este paso guarda los archivos necesarios en el telefono; puede tardar.
+5. Prueba "Usar foto de prueba 0926", luego "Buscar".
+6. Prueba el modo avion. Si abriste la app instalada y guardaste todos los
+   archivos correctamente, debe seguir funcionando sin internet.
+
+SI EL IPHONE BORRA DATOS DEL SITIO, NECESITARAS PREPARARLO DE NUEVO.
+
+DESARROLLO Y PRUEBA EN WINDOWS
+- Si tienes Python instalado, en esa carpeta abre Terminal/CMD y escribe:
+  py -m http.server 8000
+  Luego abre http://localhost:8000 en el navegador Windows.
+  Si aparece error de archivo inexistente, comprueba paso 1.
+- Si no tienes Python, puedes utilizar la extension "Live Server" de VS Code.
+- No basta con abrir index.html mediante doble clic (file://): puede mostrar
+  la interfaz, pero no permitira una instalacion PWA ni el guardado offline.
+
+LIMITACIONES Y ESTADO
+- Prototipo listo a nivel de codigo, NO verificado aqui en Safari/iPhone real.
+- Tesseract.js v5.1.1 + tesseract.js-core v5.0.0 (codigo abierto, Apache-2.0).
+- La precision depende de contraste, iluminacion, resolucion y enfoque.
+- Números grabados en metal, curvos, poco iluminados o parcialmente tapados
+  pueden no ser reconocidos. NO sustituye una inspeccion humana.
+- La descarga de bibliotecas requiere internet en Windows la primera vez;
+  la publicacion e instalacion inicial tambien requieren internet.
+- GitHub Pages publica el codigo y bibliotecas; no publiques datos privados.
+
+ESTRUCTURA
+index.html                 Interfaz
+styles.css                 Estilo responsive para iPhone
+app.js                     OCR, seleccion de fotos, marcado y descarga
+service-worker.js          Cache para uso sin conexion
+manifest.webmanifest       Instalacion PWA
+img/                       Iconos e imagen ficticia de prueba
+vendor/                    Componentes OCR (los descarga preparar_ocr.bat)
+preparar_ocr.bat/.ps1      Preparacion en Windows
+
+Para crear una aplicacion .ipa/App Store en el futuro, se necesitara
+una Mac con Xcode o un servicio remoto de compilacion compatible.

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111b32" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="CoatingScan" />
+  <meta name="description" content="Busca y marca números en fotos de herramientas desde tu iPhone." />
+  <link rel="apple-touch-icon" href="./img/icon-192.png" />
+  <link rel="icon" href="./img/icon-192.png" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>CoatingScan · Detector de números</title>
+  <script defer src="./vendor/tesseract.min.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="identity"><div class="brandmark" aria-hidden="true"><svg width="25" height="25" viewBox="0 0 24 24" fill="none"><path d="M10.5 3.25a7.25 7.25 0 1 0 0 14.5 7.25 7.25 0 0 0 0-14.5Z" stroke="white" stroke-width="2.4"/><path d="m16.2 16.3 4.3 4.4" stroke="white" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+      <div><h1>CoatingScan</h1><p>Residencia profesional · Prototipo iOS</p></div></div>
+      <span class="edition">V1.0</span>
+    </header>
+
+    <main>
+      <section class="intro"><span class="eyebrow">INSPECCIÓN VISUAL INTELIGENTE</span><h2>Encuentra números en fotografías de herramientas.</h2><p>Selecciona una imagen, escribe el número que buscas y la aplicación marcará las coincidencias con círculos rojos.</p></section>
+
+      <section class="panel" aria-label="Buscar número en imagen">
+        <div class="sectionTitle"><span class="step">1</span><div><h3>Selecciona una fotografía</h3><p>Desde tu galería o directamente con la cámara del iPhone.</p></div></div>
+        <div class="pickRow"><button id="galleryBtn" class="primary action">▧ <span>Elegir fotografía</span></button><button id="cameraBtn" class="secondary action">◎ <span>Tomar foto</span></button></div>
+        <input id="galleryInput" class="sr" type="file" accept="image/*" aria-label="Seleccionar imagen" />
+        <input id="cameraInput" class="sr" type="file" accept="image/*" capture="environment" aria-label="Tomar fotografía" />
+        <div class="demo"><span>¿Todavía no tienes una fotografía?</span><button class="textLink" id="demoBtn">Usar foto de prueba 0926 →</button></div>
+        <div id="previewWrap" class="preview empty" aria-label="Vista previa de imagen">
+          <div id="emptyPreview" class="emptyPreview"><span aria-hidden="true">▧</span><strong>Tu imagen aparecerá aquí</strong><small>PNG, JPG y formatos compatibles con tu dispositivo</small></div>
+          <canvas id="resultCanvas" hidden aria-label="Imagen procesada con marcas rojas"></canvas>
+        </div>
+        <div id="imageInfo" class="imageInfo" hidden></div>
+        <div class="separator"></div>
+        <div class="sectionTitle"><span class="step">2</span><div><h3>Indica el número</h3><p>Escribe los dígitos tal como aparecen grabados.</p></div></div>
+        <label class="fieldLabel" for="query">Número que deseas encontrar</label>
+        <div class="inputRow"><input id="query" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="48" value="0926" placeholder="Ej. 0926" /><button id="searchBtn" class="primary search" disabled>Buscar <span aria-hidden="true">→</span></button></div>
+        <p class="fieldHelp">Se marcarán todas las apariciones reconocidas, no solo la primera.</p>
+        <div id="progressWrap" class="progressWrap" hidden><div class="progressTrack"><div id="progressBar"></div></div><span id="progressText">Preparando reconocimiento…</span></div>
+        <p id="message" class="message" role="status" aria-live="polite">Selecciona una fotografía para comenzar.</p>
+        <div id="resultActions" class="resultActions" hidden><button class="secondary" id="saveBtn">↓ Guardar imagen marcada</button><button class="secondary" id="shareBtn">↗ Compartir</button></div>
+      </section>
+
+      <section class="panel smallPanel"><div class="sectionTitle"><span class="step muted">✓</span><div><h3>Preparar uso sin internet</h3><p id="offlineStatus">Revisando los archivos guardados en el dispositivo…</p></div></div><button class="secondary offlineBtn" id="offlineBtn">Preparar modo sin conexión</button><p class="fieldHelp">Requiere internet solo para instalar y guardar todos los componentes de OCR. Después podrás reconocer imágenes sin conexión.</p></section>
+      <p class="privacy">🔒 Las fotografías se analizan en tu dispositivo. Este prototipo no las envía a un servidor.</p>
+    </main>
+    <footer>Coating-Finishing · Prototipo académico</footer>
+  </div>
+</body>
+</html>

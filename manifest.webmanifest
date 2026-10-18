@@ -1,0 +1,15 @@
+{
+  "name": "CoatingScan · Detector de números",
+  "short_name": "CoatingScan",
+  "description": "Encuentra y marca números en fotografías de herramientas, incluso sin conexión después de preparar el OCR.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f6fb",
+  "theme_color": "#111b32",
+  "lang": "es",
+  "icons": [
+    {"src":"./img/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"./img/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}
